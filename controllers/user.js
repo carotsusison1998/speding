@@ -26,12 +26,29 @@ const User = require("../models/User");
 // }
 
 const getAll = async (req, res, next) => {
-  // const users = await User.findById("60a1e1140e4b2f04f85c6f36");
   const users = await User.find({});
   return res.status(200).json({ 
     "users": users
    });
 };
+
+const Login = async (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const user = await User.findOne({ "username": username, "password": password}, "_id name email");
+  if(user){
+    return res.status(200).json({ 
+      "status": true,
+      "message": "Đăng nhập thành công",
+      "result": user
+     });
+  }else{
+    return res.status(400).json({ 
+      "status": false,
+      "message": "Đăng nhập thất bại",
+     });
+  }
+}
 
 // const insertUser = (req, res, next) => {
 //     const newUser = new User(req.body)
@@ -130,5 +147,6 @@ module.exports = {
   newUserDesks,
   signIn,
   signUp,
-  secret
+  secret,
+  Login
 };

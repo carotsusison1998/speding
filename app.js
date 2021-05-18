@@ -21,6 +21,7 @@ app.use(securityApp());
 
 
 const usersRoute = require('./routes/user');
+const daysRoute = require('./routes/day');
 
 
 // Middlewares
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // routes
 app.use('/users', usersRoute);
+app.use('/days', daysRoute);
 
 // routes
 app.get('/', (req, res, next)=>{

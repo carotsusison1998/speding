@@ -9,6 +9,7 @@ const {validateParam, validateBody,schemas} = require('../helpers/routerHelpers'
 router.route('/')
     .get(userController.getAll)
     .post(validateBody(schemas.userSchema), userController.insertUser)
+router.route('/login').post(userController.Login)
 
 router.route('/signup').post(validateBody(schemas.signupSchema), userController.signUp)
 router.route('/signin').post(validateBody(schemas.signinSchema), userController.signIn)
