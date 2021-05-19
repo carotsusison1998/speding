@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const securityApp = require('helmet')
+const securityApp = require('helmet');
+const cors = require('cors');
 
 // setup connect mongodb by mongo
 mongoose.connect('mongodb+srv://admin:admin123@cluster0.51c2x.mongodb.net/db_spending', {
@@ -18,7 +19,7 @@ mongoose.connect('mongodb+srv://admin:admin123@cluster0.51c2x.mongodb.net/db_spe
 
 const app = express();
 app.use(securityApp());
-
+app.use(cors());
 
 const usersRoute = require('./routes/user');
 const daysRoute = require('./routes/day');
@@ -58,7 +59,7 @@ app.use((err, req, res, next)=>{
     })
 })
 // start server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3100;
 app.listen(port, ()=>{
     console.log(`server is listening on port ${port}`);
 })
