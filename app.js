@@ -16,7 +16,8 @@ mongoose.connect('mongodb+srv://admin:admin123@cluster0.51c2x.mongodb.net/db_spe
     }).catch((err)=>{
         console.log(`connecte db error ${err} `);
     })
-
+    
+mongoose.set('useFindAndModify', false);
 const app = express();
 app.use(securityApp());
 app.use(cors());
@@ -30,6 +31,7 @@ app.use(function(req, res, next) {
 
 const usersRoute = require('./routes/user');
 const daysRoute = require('./routes/day');
+const spendingsRoute = require('./routes/spending');
 
 
 // Middlewares
@@ -40,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // routes
 app.use('/users', usersRoute);
 app.use('/days', daysRoute);
+app.use('/spendings', spendingsRoute);
 
 // routes
 app.get('/', (req, res, next)=>{

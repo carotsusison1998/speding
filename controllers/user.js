@@ -4,6 +4,7 @@
  * 2: promises
  * 3: async/await(promises)
  */
+const Day = require("../models/Day");
 const User = require("../models/User");
 // const joi = require('joi')
 // const idSchema = joi.object().keys({
@@ -35,12 +36,14 @@ const getAll = async (req, res, next) => {
 const Login = async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  const user = await User.findOne({ "username": username, "password": password}, "_id name email");
+  const user = await User.findOne({ "username": username, "password": password}, "_id name email rule");
+  const day = await Day.find({"id_user": user._id});
   if(user){
     return res.status(200).json({ 
       "status": true,
       "message": "Đăng nhập thành công",
-      "result": user
+      "result": user,
+      "day": day
      });
   }else{
     return res.status(400).json({ 
@@ -68,6 +71,7 @@ const Login = async (req, res, next) => {
 
 const insertUser = async (req, res, next) => {
   const newUser = new User(req.value.body);
+
   await newUser.save();
   return res.status(201).json({ newUser });
 };

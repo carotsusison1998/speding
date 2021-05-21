@@ -2,15 +2,12 @@ const express = require('express');
 // const router = express.Router();
 const router = require('express-promise-router')()
 
-const dayController = require('../controllers/day')
+const spendingController = require('../controllers/spending')
 
 const {validateParam, validateBody,schemas} = require('../helpers/routerHelpers')
 
 router.route('/')
-    .get(dayController.getDay)
-    .post(dayController.insertDay)
-router.route('/get-day')
-    .post(dayController.getSpendingOfDay)
+    .post(spendingController.insertSpending)
 
 
 module.exports = router

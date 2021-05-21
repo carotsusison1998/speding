@@ -17,6 +17,10 @@ const UserSchema = new Schema({
     password:{
         type: String,
         required: true
+    },
+    rule:{
+        type: String,
+        required: true
     }
     // ,
     // desk:[{
