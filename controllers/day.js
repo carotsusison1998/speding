@@ -16,7 +16,6 @@ const getDay = async (req, res, next) => {
     const getAllDay = await Day.find({});
     return res.status(200).json({ 
         "status": true,
-        "message": "thêm chi tiêu thành công",
         "result": getAllDay
     });
 };

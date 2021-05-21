@@ -37,13 +37,11 @@ const Login = async (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
   const user = await User.findOne({ "username": username, "password": password}, "_id name email rule");
-  const day = await Day.find({"id_user": user._id});
   if(user){
     return res.status(200).json({ 
       "status": true,
       "message": "Đăng nhập thành công",
       "result": user,
-      "day": day
      });
   }else{
     return res.status(400).json({ 
