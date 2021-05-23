@@ -2,14 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const DaySchema = new Schema({
-    name:{
+    name_date:{
         type: String
     },
     total_price:{
         type: String
-    },
-    note:{
-        type: String,
     },
     id_user:{
         type: String,
