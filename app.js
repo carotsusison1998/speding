@@ -6,7 +6,7 @@ const securityApp = require('helmet');
 const cors = require('cors');
 
 // setup connect mongodb by mongo
-mongoose.connect('mongodb+srv://admin:admin123@cluster0.51c2x.mongodb.net/db_spendings', {
+mongoose.connect('mongodb+srv://admin:admin123@cluster0.51c2x.mongodb.net/db_spending', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true  
