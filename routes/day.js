@@ -4,7 +4,7 @@ const router = require('express-promise-router')()
 
 const dayController = require('../controllers/day')
 
-const {validateParam, validateBody,schemas} = require('../helpers/routerHelpers')
+const {validateParam, validateBody, schemas} = require('../helpers/routerHelpers')
 
 router.route('/')
     .get(dayController.getDay)
