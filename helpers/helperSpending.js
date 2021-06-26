@@ -52,6 +52,9 @@ const schemas = {
         _id: joi.string().required(),
         note: joi.string().required()
     }),
+    validateDeleteSpending: joi.object().keys({
+        _id: joi.string().required()
+    }),
 }
 
 module.exports = {

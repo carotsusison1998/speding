@@ -56,6 +56,7 @@ const insertSpending = async (req, res, next) => {
 };
 const updateSpending = async (req, res, next) => {
     const spendingDetail = await Spending.findById({"_id": req.value.body._id});
+    console.log(req.value.body._id);
     if(Number(spendingDetail.price) !== Number(req.value.body.price)){
         const checkDay = await Day.findById({"_id": spendingDetail.id_day});
         if(Number(req.value.body.price) > Number(spendingDetail.price)){
@@ -72,7 +73,7 @@ const updateSpending = async (req, res, next) => {
     return res.status(200).json({
         "status": true,
         "result": spendingDetailAfter,
-        "result_2": checkDayAfter
+        "result_total_day": checkDayAfter
     });
 }
 const detailSpending = async (req, res, next) => {
@@ -82,8 +83,34 @@ const detailSpending = async (req, res, next) => {
         "result": spendingDetail
     })
 }
+const deleteSpending = async (req, res, next) => {
+    const _id = req.query.id;
+    const spendingDetail = await Spending.findById({"_id": _id});
+    const checkDay = await Day.findById({"_id": spendingDetail.id_day});
+    if(checkDay.total_price > 0){
+        var dayUpdate = await Day.findByIdAndUpdate(checkDay._id, {total_price:  Number(checkDay.total_price) - Number(spendingDetail.price) });
+        if(dayUpdate){
+            await Spending.findByIdAndDelete(_id, async () => {
+                const getOfDay = await Spending.find({id_day: checkDay._id}).sort( { "_id": -1 } );
+                var total = 0;
+                getOfDay.forEach((e)=>{
+                    total += Number(e.price);
+                })
+                const getAllDay = await Day.find().sort( { "_id": -1 } );
+                return res.status(200).json({ 
+                    "status": true,
+                    "total": total,
+                    "message": "lấy chi tiêu thành công",
+                    "result": getOfDay,
+                    "result_2": getAllDay
+                });
+            });
+        }
+    }
+}
 module.exports = {
     insertSpending,
     updateSpending,
     detailSpending,
+    deleteSpending,
 };

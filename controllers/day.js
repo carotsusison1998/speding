@@ -18,7 +18,7 @@ const insertDay = async (req, res, next) => {
     // }).catch((err) => next(err))
 };
 const getDay = async (req, res, next) => {
-    const getAllDay = await Day.find().sort( { "_id": -1 } );
+    const getAllDay = await Day.find().sort( { "_id": -1, "date": -1 });
 
     var total = 0;
     getAllDay.forEach((e)=>{
@@ -32,7 +32,8 @@ const getDay = async (req, res, next) => {
 };
 
 const getSpendingOfDay = async (req, res, next) => {
-    const getOfDay = await Spending.find({id_day: req.body.id_day}).sort( { "_id": -1 } );;
+    const getOfDay = await Spending.find({id_day: req.body.id_day}).sort( { "_id": -1 } );
+    const getDay = await Day.find({_id: req.body.id_day}).sort( { "_id": -1 } );
     var total = 0;
     getOfDay.forEach((e)=>{
         total += Number(e.price);
@@ -41,7 +42,8 @@ const getSpendingOfDay = async (req, res, next) => {
         "status": true,
         "total": total,
         "message": "lấy chi tiêu thành công",
-        "result": getOfDay
+        "result": getOfDay,
+        "result_2": getDay
     });
 }
 
