@@ -11,6 +11,9 @@ router.route('/')
     .post(dayController.insertDay)
 router.route('/get-day')
     .post(dayController.getSpendingOfDay)
-
+router.route('/filter-month/:month')
+    .get(dayController.getFilterOfMonth)
+router.route('/filter-year/:year')
+    .get(dayController.getFilterOfYear)
 
 module.exports = router

@@ -46,9 +46,41 @@ const getSpendingOfDay = async (req, res, next) => {
         "result_2": getDay
     });
 }
+const getFilterOfMonth = async (req, res, next) => {
+    const dateConvert = (req.params.month).replace("-", "/");
+    await Day.collection.createIndex( { name_date: "text"} );
+    const filterOfMonth = await Day.find( { $text: { $search: '"'+dateConvert+'"' } } )
+    var total = 0;
+    filterOfMonth.forEach((e)=>{
+        total += Number(e.total_price);
+    })
+    return res.status(200).json({
+        "status": true,
+        "message": "lọc thành công theo tháng",
+        "total": total,
+        "result": filterOfMonth,
+    })
+}
+const getFilterOfYear = async (req, res, next) => {
+    const dateConvert = (req.params.year).replace("-", "/");
+    await Day.collection.createIndex( { name_date: "text"} );
+    const filterOfMonth = await Day.find( { $text: { $search: '"'+dateConvert+'"' } } )
+    var total = 0;
+    filterOfMonth.forEach((e)=>{
+        total += Number(e.total_price);
+    })
+    return res.status(200).json({
+        "status": true,
+        "message": "lọc thành công theo năm",
+        "total": total,
+        "result": filterOfMonth,
+    })
+}
 
 module.exports = {
   insertDay,
   getDay,
-  getSpendingOfDay
+  getSpendingOfDay,
+  getFilterOfMonth,
+  getFilterOfYear
 };
